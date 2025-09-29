@@ -1,7 +1,6 @@
 numpy
-os
 librosa
 matplotlib
 scipy
-tensorflo
+tensorflow
 silero-vad
