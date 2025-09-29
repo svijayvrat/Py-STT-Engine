@@ -1,4 +1,5 @@
 import streamlit as st
+import streamlit_analytics
 
 # Session-states for streamlit that are shared between sessions.
 # Touch this if you want to break something fast.
@@ -423,24 +424,25 @@ def check_dataset(dataset,num):
 #     pred=model.predict(im,verbose=3)
 #     print(f"Prediction: {words[np.argmax(pred)]} \t True Value: {words[lb[0].numpy()]}")
 
-
-# If record button hasn't been pressed yet, display button and mark as pressed if so. 
-if not st.session_state.record_flag and st.button("Record Audio"):
-    if st.session_state.got_audio==True:
-        os.remove(st.session_state.audio_path+"rec_audio.wav")
-        st.session_state.got_audio=False
-    st.session_state.record_flag=True
-    st.session_state.upload_flag=False
-    st.rerun()
+with streamlit_analytics.track():
         
-# If upload button hasn't been pressed yet, display button and mark as pressed if so.
-if not st.session_state.upload_flag and st.button("Upload Audio"):
-    if st.session_state.got_audio==True:
-        os.remove(st.session_state.audio_path+"rec_audio.wav")
-        st.session_state.got_audio=False
-    st.session_state.record_flag=False
-    st.session_state.upload_flag=True
-    st.rerun()
+    # If record button hasn't been pressed yet, display button and mark as pressed if so. 
+    if not st.session_state.record_flag and st.button("Record Audio"):
+        if st.session_state.got_audio==True:
+            os.remove(st.session_state.audio_path+"rec_audio.wav")
+            st.session_state.got_audio=False
+        st.session_state.record_flag=True
+        st.session_state.upload_flag=False
+        st.rerun()
+            
+    # If upload button hasn't been pressed yet, display button and mark as pressed if so.
+    if not st.session_state.upload_flag and st.button("Upload Audio"):
+        if st.session_state.got_audio==True:
+            os.remove(st.session_state.audio_path+"rec_audio.wav")
+            st.session_state.got_audio=False
+        st.session_state.record_flag=False
+        st.session_state.upload_flag=True
+        st.rerun()
 
 
 # Record button is pressed
