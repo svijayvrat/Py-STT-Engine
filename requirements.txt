@@ -1,0 +1,7 @@
+numpy
+os
+librosa
+matplotlib
+scipy
+tensorflo
+silero-vad
