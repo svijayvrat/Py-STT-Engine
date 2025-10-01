@@ -489,16 +489,23 @@ if st.session_state.got_audio==True and st.button("Generate Text"):
 if st.session_state.get_mfcc==True:
     st.session_state.get_mfcc=False
     prepare_data(st.session_state.audio_path,st.session_state.mfcc_path+"img/")
-    model=load_model('models/best_model.keras')
+    model=load_model('models/MNIST/model3.keras')
     test_data=image_dataset_from_directory(st.session_state.mfcc_path,image_size=(100,100),batch_size=1)
     pred=model.predict(test_data)
     st.session_state.record_flag=False
     st.session_state.upload_flag=False
     # Generate Text from prediction
     words={
-        0:"Bird",
-        1:"Cat",
-        2:"Dog"
+        0:"0",
+        1:"1",
+        2:"2",
+        3:"3",
+        4:"4",
+        5:"5",
+        6:"6",
+        7:"7",
+        8:"8",
+        9:"9"
     }
     st.write(f"Prediction: {words[np.argmax(pred)]}")
 
