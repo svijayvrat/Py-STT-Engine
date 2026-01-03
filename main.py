@@ -47,7 +47,7 @@ if not st.session_state.import_flag:
         bar.progress(9*9.09/100)
         from tensorflow.keras.utils import image_dataset_from_directory
         bar.progress(10*9.09/100)
-        from torchaudio import load as torchload
+        from torchcodec.decoders import AudioDecoder
         bar.progress(11*9.09/100)
         st.session_state.import_flag=True
         st.success("Imported Resources")
@@ -55,7 +55,9 @@ if not st.session_state.import_flag:
 else:
     bar.progress(100/100)
 def remake_audio(path):
-    audio,sampleRate = torchload(path)
+    decoder = AudioDecoder(path)
+    sampleRate = decoder.metadata.sample_rate
+    audio = decoder.get_all_samples().data
     audio=audio.numpy()
     audio=np.mean(audio,axis=0)
     audioSize=audio.size
